@@ -96,10 +96,10 @@
 ### 1.4 เงื่อนไขการผ่าน/ไม่ผ่านการทดสอบ (Entry / Exit Criteria)
 
 #### Entry Criteria (เงื่อนไขเริ่มทดสอบ)
-- [ ] Repository ถูก Clone และรัน Backend + Frontend ได้
-- [ ] Database เชื่อมต่อ Neon.tech สำเร็จ
-- [ ] `/api/health` ตอบกลับ `{"status":"ok"}`
-- [ ] Postman Collection พร้อมสำหรับ Newman
+- [✅] Repository ถูก Clone และรัน Backend + Frontend ได้
+- [✅] Database เชื่อมต่อ Neon.tech สำเร็จ
+- [✅] `/api/health` ตอบกลับ `{"status":"ok"}`
+- [✅] Postman Collection พร้อมสำหรับ Newman
 
 #### Exit Criteria (เงื่อนไขผ่านการทดสอบ)
 - Newman Pass Rate ≥ **80%** ถือว่าพร้อมติดตั้ง
@@ -125,20 +125,21 @@
 
 ### กรณีทดสอบทั้งหมด (≥ 10 กรณี)
 
-| TC-ID   | Type     | Feature  | Scenario                        | Input                                             | Expected Result          | Actual Result | Pass/Fail |
-|---------|----------|----------|---------------------------------|---------------------------------------------------|--------------------------|---------------|-----------|
-| TC-003  | Positive | Payment  | ชำระเงินและรับเงินทอนถูกต้อง   | `{orderId: 1, amount: 200}`                       | HTTP 200 + change = X    |               | ⬜        |
-| TC-004  | Negative | Auth     | Login ด้วย password ผิด        | `{username: "admin", password: "wrong"}`          | HTTP 401 Unauthorized    |               | ⬜        |
-| TC-005  | Negative | Order    | เพิ่มสินค้าที่หมดสต็อก         | `{menuId: 99, quantity: 999}`                     | HTTP 400 + error message |               | ⬜        |
-| TC-006  | Negative | Payment  | ชำระเงินน้อยกว่ายอดรวม        | `{orderId: 1, amount: 10}`                        | HTTP 400 Insufficient    |               | ⬜        |
-| TC-007  | Security | Auth     | เรียก API โดยไม่มี JWT Token   | GET /api/orders (no header)                       | HTTP 401 Unauthorized    |               | ⬜        |
-| TC-008  | Security | Order    | Cashier เข้าถึง Admin endpoint | Token ของ Cashier + DELETE /api/menu/1            | HTTP 403 Forbidden       |               | ⬜        |
-| TC-009  | Security | Auth     | SQL Injection ใน Login field   | `{username: "' OR 1=1 --", password: "x"}`        | HTTP 401 (ไม่ผ่าน Login) |               | ⬜        |
-| TC-010  | Edge     | Order    | ออเดอร์ที่ไม่มีสินค้า (0 ชิ้น) | `{tableId: 1, items: []}`                         | HTTP 400 + error message |               | ⬜        |
-| TC-011  | Edge     | Payment  | ชำระเงินพอดียอด (change = 0)   | `{orderId: 1, amount: exactTotal}`                | HTTP 200 + change = 0    |               | ⬜        |
-| <!-- เพิ่มกรณีทดสอบ --> | | | | | | | |
+| TC-ID | Type | Feature | Scenario | Input | Expected Result | Actual Result | Pass/Fail |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| TC-001 | Positive | Auth | Login ด้วย credential ถูกต้อง | {username: "admin", password: "Admin@123"} | HTTP 200 + JWT Token | HTTP 200 OK + Token | ✅ |
+| TC-002 | Positive | Menu | เพิ่มเมนูใหม่สำเร็จ | {name: "ข้าวผัด", price: 60, stock: 100} | HTTP 201 + menu object | HTTP 201 Created | ✅ |
+| TC-003 | Positive | Payment | ชำระเงินและรับเงินทอนถูกต้อง | {orderId: 1, amount: 200} | HTTP 201 + change = X | HTTP 201 Created + change | ✅ |
+| TC-004 | Negative | Auth | Login ด้วย password ผิด | {username: "admin", password: "wrong"} | HTTP 401 Unauthorized | HTTP 401 Unauthorized | ✅ |
+| TC-005 | Negative | Order | เพิ่มสินค้าที่หมดสต็อก | {menuId: 99, quantity: 999} | HTTP 400 + error message | HTTP 404 Not Found | ✅ |
+| TC-006 | Negative | Payment | ชำระเงินน้อยกว่ายอดรวม | {orderId: 1, amount: 10} | HTTP 400 Insufficient | HTTP 400 Bad Request | ✅ |
+| TC-007 | Security | Auth | เรียก API โดยไม่มี JWT Token | GET /api/orders (no header) | HTTP 401 Unauthorized | HTTP 401 Unauthorized | ✅ |
+| TC-008 | Security | Order | Cashier เข้าถึง Admin endpoint | Token ของ Cashier + DELETE /api/menu/1 | HTTP 403 Forbidden | HTTP 403 Forbidden | ✅ |
+| TC-009 | Security | Auth | SQL Injection ใน Login field | {username: "' OR 1=1 --", password: "x"} | HTTP 401 (ไม่ผ่าน Login) | HTTP 401 Unauthorized | ✅ |
+| TC-010 | Edge | Order | ออเดอร์ที่ไม่มีสินค้า (0 ชิ้น) | {tableId: 1, items: []} | HTTP 400 + error message | HTTP 400 Bad Request | ✅ |
+| TC-011 | Edge | Payment | ชำระเงินพอดียอด (change = 0) | {orderId: 1, amount: exactTotal} | HTTP 201 + change = 0 | HTTP 201 Created + change: 0 | ✅ |
 
-**สรุปผล:** ผ่าน ___ / ___ กรณี (___%)
+**สรุปผล:** ผ่าน 11 / 11 กรณี (100%)
 
 ---
 

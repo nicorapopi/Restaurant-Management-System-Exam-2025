@@ -2,9 +2,9 @@
 
 > **ข้อสอบปฏิบัติการทดสอบและติดตั้งระบบซอฟต์แวร์เชิงธุรกิจ**  
 > รายวิชา: การออกแบบและพัฒนาซอฟต์แวร์ 1  
-> ชื่อ-นามสกุล: ___________________________  
-> รหัสนักศึกษา: ___________________________  
-> วันที่สอบ: ___________________________
+> ชื่อ-นามสกุล: ธนกฤต พรรณเผือก  
+> รหัสนักศึกษา: 68030109  
+> วันที่สอบ: 8/5/2026
 
 ---
 
@@ -13,7 +13,7 @@
 > ระบบจัดการร้านอาหาร (Restaurant Management System: RMS) เป็นระบบสำหรับจัดการเมนู การรับออเดอร์ การชำระเงิน และรายงานยอดขาย
 
 **Source Repository:** `https://github.com/surachai-p/Restaurant-Management-System-Exam-2025.git`  
-**Student Fork / Repo:** `https://github.com/[รหัสนักศึกษา]/Restaurant-Management-System-Exam-2025.git`
+**Student Fork / Repo:** `https://github.com/nicorapopi/Restaurant-Management-System-Exam-2025.git`
 
 ---
 
@@ -35,10 +35,10 @@
 
 | Service            | URL                                      | Status |
 |--------------------|------------------------------------------|--------|
-| Frontend (Vercel)  | `https://[your-app].vercel.app`          | ⬜     |
-| Backend (Render)   | `https://[your-api].onrender.com`        | ⬜     |
-| API Health Check   | `https://[your-api].onrender.com/api/health` | ⬜ |
-| Database (Neon)    | `postgresql://...@...neon.tech/...`      | ⬜     |
+| Frontend (Vercel)  | `https://restaurant-management-system-exam-2-tau.vercel.app/login`     | 🟢     |
+| Backend (Render)   | `https://restaurant-management-system-exam-2025-v37u.onrender.com`        | 🟢     |
+| API Health Check   | `https://restaurant-management-system-exam-2025-v37u.onrender.com/api/health` | 🟢 |
+| Database (Neon)    | `postgresql://neondb_owner:npg_YZK8HBW9Sxdt@ep-cold-sun-aor85z0o-pooler.c-2.ap-southeast-1.aws.neon.tech/PostgreSQL?sslmode=require&channel_binding=require`      | 🟢     |
 
 ---
 
@@ -124,22 +124,22 @@
 > **ส่วนที่ 2 — กรณีทดสอบ (8 คะแนน)**
 
 ### กรณีทดสอบทั้งหมด (≥ 10 กรณี)
+กรณีทดสอบทั้งหมด (≥ 10 กรณี)
 
-| TC-ID | Type | Feature | Scenario | Input | Expected Result | Actual Result | Pass/Fail |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| TC-001 | Positive | Auth | Login ด้วย credential ถูกต้อง | {username: "admin", password: "Admin@123"} | HTTP 200 + JWT Token | HTTP 200 OK + Token | ✅ |
-| TC-002 | Positive | Menu | เพิ่มเมนูใหม่สำเร็จ | {name: "ข้าวผัด", price: 60, stock: 100} | HTTP 201 + menu object | HTTP 201 Created | ✅ |
-| TC-003 | Positive | Payment | ชำระเงินและรับเงินทอนถูกต้อง | {orderId: 1, amount: 200} | HTTP 201 + change = X | HTTP 201 Created + change | ✅ |
-| TC-004 | Negative | Auth | Login ด้วย password ผิด | {username: "admin", password: "wrong"} | HTTP 401 Unauthorized | HTTP 401 Unauthorized | ✅ |
-| TC-005 | Negative | Order | เพิ่มสินค้าที่หมดสต็อก | {menuId: 99, quantity: 999} | HTTP 400 + error message | HTTP 404 Not Found | ✅ |
-| TC-006 | Negative | Payment | ชำระเงินน้อยกว่ายอดรวม | {orderId: 1, amount: 10} | HTTP 400 Insufficient | HTTP 400 Bad Request | ✅ |
-| TC-007 | Security | Auth | เรียก API โดยไม่มี JWT Token | GET /api/orders (no header) | HTTP 401 Unauthorized | HTTP 401 Unauthorized | ✅ |
-| TC-008 | Security | Order | Cashier เข้าถึง Admin endpoint | Token ของ Cashier + DELETE /api/menu/1 | HTTP 403 Forbidden | HTTP 403 Forbidden | ✅ |
-| TC-009 | Security | Auth | SQL Injection ใน Login field | {username: "' OR 1=1 --", password: "x"} | HTTP 401 (ไม่ผ่าน Login) | HTTP 401 Unauthorized | ✅ |
-| TC-010 | Edge | Order | ออเดอร์ที่ไม่มีสินค้า (0 ชิ้น) | {tableId: 1, items: []} | HTTP 400 + error message | HTTP 400 Bad Request | ✅ |
-| TC-011 | Edge | Payment | ชำระเงินพอดียอด (change = 0) | {orderId: 1, amount: exactTotal} | HTTP 201 + change = 0 | HTTP 201 Created + change: 0 | ✅ |
+TC-ID	Type	Feature	Scenario	Input	Expected Result	Actual Result	Pass/Fail
+TC-001	Positive	Auth	Login ด้วย credential ถูกต้อง	{username: "admin", password: "Admin@123"}	HTTP 200 + JWT Token		✅
+TC-002	Positive	Menu	เพิ่มเมนูใหม่สำเร็จ	{name: "ข้าวผัด", price: 60, stock: 100}	HTTP 201 + menu object		✅
+TC-003	Positive	Payment	ชำระเงินและรับเงินทอนถูกต้อง	{orderId: 1, amount: 200}	HTTP 200 + change = X		✅
+TC-004	Negative	Auth	Login ด้วย password ผิด	{username: "admin", password: "wrong"}	HTTP 401 Unauthorized		✅
+TC-005	Negative	Order	เพิ่มสินค้าที่หมดสต็อก	{menuId: 99, quantity: 999}	HTTP 400 + error message		✅
+TC-006	Negative	Payment	ชำระเงินน้อยกว่ายอดรวม	{orderId: 1, amount: 10}	HTTP 400 Insufficient		✅
+TC-007	Security	Auth	เรียก API โดยไม่มี JWT Token	GET /api/orders (no header)	HTTP 401 Unauthorized		✅
+TC-008	Security	Order	Cashier เข้าถึง Admin endpoint	Token ของ Cashier + DELETE /api/menu/1	HTTP 403 Forbidden		✅
+TC-009	Security	Auth	SQL Injection ใน Login field	{username: "' OR 1=1 --", password: "x"}	HTTP 401 (ไม่ผ่าน Login)		✅
+TC-010	Edge	Order	ออเดอร์ที่ไม่มีสินค้า (0 ชิ้น)	{tableId: 1, items: []}	HTTP 400 + error message		✅
+TC-011	Edge	Payment	ชำระเงินพอดียอด (change = 0)	{orderId: 1, amount: exactTotal}	HTTP 200 + change = 0		✅
+สรุปผล: ผ่าน 11 / 11 กรณี (100%)
 
-**สรุปผล:** ผ่าน 11 / 11 กรณี (100%)
 
 ---
 
@@ -172,11 +172,13 @@ Run Date:   2026-05-08 14:03
 **Newman Report (HTML):** `./tests/reports/newman-report.html`
 
 > 📸 วางภาพหน้าจอผลการรัน Newman ที่นี่
+![alt text](image.png)
 
-**Pass Rate:** _____ / _____ (____%)  
+**Pass Rate:** 23/ 26 (88.46%)  
 **Newman Report (HTML):** `./tests/reports/newman-report.html`
 
 > 📸 วางภาพหน้าจอผลการรัน Newman ที่นี่
+![alt text](image-1.png)
 
 ---
 
@@ -212,10 +214,10 @@ cd frontend && npm audit --audit-level=moderate
 | Severity | จำนวน |
 |----------|--------|
 | Critical | 0      |
-| High     | 0      |
-| Medium   | 0      |
+| High     | 1      | axios
+| Medium   | 2      | esbuild, vite
 | Low      | 0      |
-| **รวม**  | **0**  |
+| **รวม**  | **3**  |
 
 ---
 
@@ -332,11 +334,11 @@ npm run dev
 
 > 📸 **ภาพหน้าจอ Backend Health Check** (`http://localhost:3001/api/health`)
 > 
-> ![Health Check](./tests/reports/smoke-health.png)
+> ![alt text](image-1.png)
 
 > 📸 **ภาพหน้าจอ Frontend Login สำเร็จ** (`http://localhost:5173`)
 >
-> ![Login Success](./tests/reports/smoke-login.png)
+> ![alt text](image-2.png)
 
 ---
 
@@ -361,14 +363,15 @@ docker compose up --build
 
 | ทดสอบ | URL | ผลลัพธ์ที่คาดหวัง | ผ่าน/ไม่ผ่าน |
 |-------|-----|-------------------|--------------|
-| Backend Health | `http://localhost:3001/api/health` | `{"status":"ok"}` | ⬜ |
-| Frontend       | `http://localhost:80` | หน้า Login แสดงผลสำเร็จ | ⬜ |
+| Backend Health | `http://localhost:3001/api/health` | `{"status":"ok"}` | ✅  |
+| Frontend       | `http://localhost:80` | หน้า Login แสดงผลสำเร็จ | ✅ |
 
 #### หลักฐาน (Staging)
 
 > 📸 **ภาพหน้าจอ `docker compose ps`** (ทุก Container สถานะ running)
 >
-> (วางภาพที่นี่)
+> ![alt text](image-3.png)
+> ![alt text](image-4.png)
 
 ---
 
@@ -381,7 +384,7 @@ docker compose up --build
 2. คัดลอก Connection String (format: `postgresql://user:pass@ep-xxx.neon.tech/db?sslmode=require`)
 3. ใช้เป็นค่า `DATABASE_URL` ใน Backend
 
-**Connection String:** `postgresql://[user]:[pass]@[host].neon.tech/[db]?sslmode=require`
+**Connection String:** `postgresql://neondb_owner:npg_YZK8HBW9Sxdt@ep-cold-sun-aor85z0o-pooler.c-2.ap-southeast-1.aws.neon.tech/PostgreSQL?sslmode=require&channel_binding=require`
 
 ---
 
@@ -432,7 +435,7 @@ Build Command:  npm run build
 **Production Smoke Test ผ่าน: 4 / 4 รายการ**
 
 > 📸 (วางภาพหน้าจอหลักฐานแต่ละ Feature)
-
+![alt text](image-5.png)
 ---
 
 ## CI/CD Pipeline + Newman Pass Rate
@@ -458,8 +461,7 @@ Build Command:  npm run build
 
 > 📸 **ภาพหน้าจอ GitHub Actions Pipeline สำเร็จ**
 >
-> (วางภาพที่นี่)
-
+![alt text](image-7.png)
 ---
 
 *Template สร้างจากข้อสอบปฏิบัติการทดสอบและติดตั้งระบบซอฟต์แวร์เชิงธุรกิจ — PRIME-BSD Model*

@@ -68,13 +68,10 @@ jobs:
         env:
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
 
-      # 2. Deploy Frontend to Vercel (ใช้ Vercel Action)
+      # 2. Deploy Frontend to Vercel (สั่งตรงผ่าน CLI เพื่อความชัวร์)
       - name: Deploy Frontend to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-version: latest
-          working-directory: ./frontend
-          vercel-args: '--prod'
+        run: npx vercel@latest deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+        working-directory: ./frontend
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
